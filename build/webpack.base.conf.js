@@ -33,7 +33,6 @@ module.exports = {
       'network': resolve('src/network'),
       'views': resolve('src/views'),
       
-      
     }
   },
   module: {

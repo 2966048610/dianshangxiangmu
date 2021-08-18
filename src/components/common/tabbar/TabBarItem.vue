@@ -36,6 +36,7 @@
     },
     // 计算属性
     computed:{
+
       // TabBarItem 的动态图片控制
       isActive(){
         // /home -> item1(/home) = true
