@@ -43,7 +43,6 @@
         // /home -> item1(/category) = false
         // /home -> item1(/cart) = false
         // /home -> item1(/profile) = false
-        console.log(this.$route.path,this.path);
         return this.$route.path.indexOf(this.path) !== -1
         // this.$route.path 是获取当前路由地址
 
@@ -56,7 +55,6 @@
     },
     methods:{
       itemClick() {
-        console.log(this.$route.path,this.isActive);
         this.$router.replace(this.path)
       }
     }
