@@ -15,9 +15,10 @@
     <!-- 本周流行 组件 -->
     <feature-view></feature-view>
 
-
-    <tab-control class="tab-control" :titles="['流行','新款','精选']"></tab-control>
-
+    <!-- 流行,新款,精选 组件 -->
+    <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick="tabClick"></tab-control>
+     <!-- 商品展示 组件 -->
+    <goods-list :goods='name' ></goods-list>
 
 <ul>
   <li>1</li>
@@ -42,6 +43,9 @@
   import NavBar from 'components/common/navbar/NavBar'
   // 流行,新款,精选 组件
   import TabControl from 'components/content/tabControl/TabControl'
+  // 商品展示 组件
+  import GoodsList from 'components/content/goods/GoodsList'
+
 
 
   // 轮播图的 组件
@@ -57,6 +61,7 @@
 
       NavBar,
       TabControl,
+      GoodsList,
 
       HomeSwiper,
       RecommendView,
@@ -72,23 +77,63 @@
 
         goods:{
           'pop':{page:0 , list:[]},
-          'news':{page:0 , list:[]},
+          'new':{page:0 , list:[]},
           'sell':{page:0 , list:[]},
-        }
+        },
+
+        currentType : 'pop'
 
       }
 
     },
+    
+    // 生命周期 ，页面创建后执行
     created(){
       // 请求多个数据
       this.getHomeMuitidata()
 
       // 请求商品数据
       this.getHomeGoods('pop')
+      this.getHomeGoods('new')
+      this.getHomeGoods('sell')
 
     },
+    
+    // 计算属性
+    computed: {
+      name() {
+        return this.goods[this.currentType].list
+      }
+    },
+    
 
     methods:{
+
+      /*
+        * 事件监听相关的方法
+      */
+
+     // 监听 页面点击事件，判断获取goods中的哪个数据
+      tabClick(index){
+        switch(index){
+          case 0:
+            this.currentType = 'pop'
+            break
+          case 1:
+            this.currentType = 'new'
+            break
+          case 2:
+            this.currentType = 'sell'
+            break
+        }
+      },
+
+
+
+
+      /*
+        * 网路请求相关的方法
+      */
       // 请求多个数据
       getHomeMuitidata(){
         getHomeMuitidata().then(res => {
@@ -103,8 +148,11 @@
       // 请求商品数据
       getHomeGoods(type){
         const page = this.goods[type].page + 1
-        getHomeGoods(type,1).then(res => {
-          console.log(res);
+        getHomeGoods(type,page).then(res => {
+          // console.log(res);
+          // console.log(res.data.list);
+          this.goods[type].list.push(...res.data.list)   // 使用 ... 这种语法的意思是 ：把数据解构，然后一个一个的添加到数组中
+          this.goods[type].page += 1
         })
       }
 

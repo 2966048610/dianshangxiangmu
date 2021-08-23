@@ -26,6 +26,7 @@
     methods:{
       itemClick(index){
         this.currentIndex = index ;
+        this.$emit('tabClick',index) // 监听点击时间，并使用 $emit() 传递到首页home
       }
     }
 
@@ -42,6 +43,7 @@
     height: 40px;
     line-height: 40px;
     background-color: #fff;
+    z-index: 100;
   }
   .tab-control-item{
     flex: 1;

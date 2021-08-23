@@ -89,7 +89,7 @@ export function request(config) {    // config 是请求的地址等基本信息
 
   // 创建 axios 的实例
   const instance = axios.create({
-    baseURL:'http://123.207.32.32:8000',
+    baseURL:'http://152.136.185.210:7878/api/m5',
     timeout:5000
   })
 
