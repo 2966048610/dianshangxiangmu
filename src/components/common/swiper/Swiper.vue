@@ -18,11 +18,11 @@ export default {
 	name: "Swiper",
     props: {
       interval: {
-		type: Number,
+        type: Number,
         default: 3000
       },
       animDuration: {
-		type: Number,
+        type: Number,
         default: 300
       },
       moveRatio: {

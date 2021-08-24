@@ -1,6 +1,6 @@
 <template>
   <div class="featurn">
-    <a href="javasrcipt:0">
+    <a href="#">
       <img src="~assets/img/home/recommend_bg.jpg" >
     </a>
   </div>

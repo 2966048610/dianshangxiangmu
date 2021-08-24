@@ -6,19 +6,27 @@
       <div slot="center">购物街</div>
     </nav-bar>
 
-    <!-- 轮播图的 组件 -->
-    <home-swiper :banners="banner"></home-swiper>
+    <!-- 使用 视图滚动插件封装的组件 ，让这一部分内容能够滚动 的 更利索 -->
+    <scroll class="content" ref="scroll" >
 
-    <!-- 推荐信息的 组件 -->
-    <recommend-view :recommend='recommend' />
+      <!-- 轮播图的 组件 -->
+      <home-swiper :banners="banner"></home-swiper>
 
-    <!-- 本周流行 组件 -->
-    <feature-view></feature-view>
+      <!-- 推荐信息的 组件 -->
+      <recommend-view :recommend='recommend' />
 
-    <!-- 流行,新款,精选 组件 -->
-    <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick="tabClick"></tab-control>
-     <!-- 商品展示 组件 -->
-    <goods-list :goods='name' ></goods-list>
+      <!-- 本周流行 组件 -->
+      <feature-view></feature-view>
+
+      <!-- 流行,新款,精选 组件 -->
+      <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick="tabClick"></tab-control>
+       <!-- 商品展示 组件 -->
+      <goods-list :goods='name' ></goods-list>
+
+    </scroll>
+
+    <!-- 组件添加 原生事件时，需要添加修饰符 .native -->
+    <back-top @click.native='backClick' ></back-top>
 
 <ul>
   <li>1</li>
@@ -34,20 +42,36 @@
 </template>
 
 <script>
-
+  /*
+    * 网络 组件
+  */
   // 数据请求 组件
   import { getHomeMuitidata , getHomeGoods } from 'network/home'
 
-
+  /*
+   * 公共 组件
+  */
   // 首页的导航 组件
   import NavBar from 'components/common/navbar/NavBar'
+  // 视图滚动插件封装的组件
+  import Scroll from 'components/common/scroll/Scroll'
+
+
+  /*
+   * 公共 组件 中和本项目业务有关的组件
+  */
   // 流行,新款,精选 组件
   import TabControl from 'components/content/tabControl/TabControl'
   // 商品展示 组件
   import GoodsList from 'components/content/goods/GoodsList'
 
+  import BackTop from 'components/content/backTop/BackTop'
 
 
+
+  /*
+   * 首页的 组件
+  */
   // 轮播图的 组件
   import HomeSwiper from './childComps/HomeSwiper'
   // 推荐信息的 组件
@@ -59,10 +83,16 @@
   export default {
     components:{
 
+      // 公共 组件
       NavBar,
+      Scroll,
+
+      // 公共 组件 中和本项目业务有关的组件
       TabControl,
       GoodsList,
+      BackTop,
 
+      // 首页的 组件
       HomeSwiper,
       RecommendView,
       FeatureView,
@@ -86,7 +116,7 @@
       }
 
     },
-    
+
     // 生命周期 ，页面创建后执行
     created(){
       // 请求多个数据
@@ -98,14 +128,14 @@
       this.getHomeGoods('sell')
 
     },
-    
+
     // 计算属性
     computed: {
       name() {
         return this.goods[this.currentType].list
       }
     },
-    
+
 
     methods:{
 
@@ -126,6 +156,11 @@
             this.currentType = 'sell'
             break
         }
+      },
+
+      backClick(){
+        // console.log(1);
+        this.$refs.scroll.scrollTo(0,0,500)
       },
 
 
@@ -160,19 +195,38 @@
   }
 </script>
 
-<style>
+<style scoped>
+  #home{
+    height: 100vh;
+    position: relative;
+  }
   /* 首页的导航 */
   .home-nav{
     background-color: var(--color-tint);
     color: #fff;
   }
 
-.tab-control{
-  position: sticky;
-  top: 44px;
-}
+  .tab-control{
+    position: sticky;
+    top: 44px;
+  }
 
+  /* 第一种方法 */
+  .content{
+    overflow: hidden;
 
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+  }
+  /* 第二种方法 */
+  /* .content{
+    height: calc(100% - 93px);
+    margin-top: 44px;
+    overflow: hidden;
+  } */
 
 
 
