@@ -7,7 +7,7 @@
     </nav-bar>
 
     <!-- 使用 视图滚动插件封装的组件 ，让这一部分内容能够滚动 的 更利索 -->
-    <scroll class="content" ref="scroll" >
+    <scroll class="content" ref="scroll" :probe-type="3" @scroll='contentScroll' >
 
       <!-- 轮播图的 组件 -->
       <home-swiper :banners="banner"></home-swiper>
@@ -25,8 +25,9 @@
 
     </scroll>
 
+    <!-- 点击 返回 顶部 组件 -->
     <!-- 组件添加 原生事件时，需要添加修饰符 .native -->
-    <back-top @click.native='backClick' ></back-top>
+    <back-top @click.native='backClick' v-show="isShowBackTop" ></back-top>
 
 <ul>
   <li>1</li>
@@ -64,7 +65,7 @@
   import TabControl from 'components/content/tabControl/TabControl'
   // 商品展示 组件
   import GoodsList from 'components/content/goods/GoodsList'
-
+  // 点击 返回 顶部 组件
   import BackTop from 'components/content/backTop/BackTop'
 
 
@@ -111,7 +112,9 @@
           'sell':{page:0 , list:[]},
         },
 
-        currentType : 'pop'
+        currentType : 'pop',
+
+        isShowBackTop:false
 
       }
 
@@ -161,6 +164,11 @@
       backClick(){
         // console.log(1);
         this.$refs.scroll.scrollTo(0,0,500)
+      },
+
+      contentScroll(position){
+        // console.log(position,-position.y);
+        this.isShowBackTop = (-position.y) > 1000
       },
 
 

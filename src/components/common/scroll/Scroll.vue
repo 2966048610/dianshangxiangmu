@@ -13,18 +13,37 @@
 
 
   export default {
+    props:{
+
+      probeType:{
+        type:Number,
+        default: 0
+      },
+
+    },
     data() {
       return {
-        scroll: null
+        scroll: null,
+
       }
     },
     mounted() {
 
+      // 创建 BScroll 对象
       this.scroll = new BScroll(this.$refs.wrapper,{
         click:true,
-        observeDOM:true
+        probeType: this.probeType , // 根据 使用者 输入的 值 来决定 是否 监听 ，怎么样的 监听 ，值：0,1,2,3
+        observeDOM:true , // 实时监听 DOM
       })
-      console.log(this.$refs.wrapper);
+      // console.log(this.$refs.wrapper);
+
+      this.scroll.on('scroll',(position) => {
+        // console.log(position);
+        this.$emit('scroll',position)
+      })
+
+
+
     },
 
     methods:{
