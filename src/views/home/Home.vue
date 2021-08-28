@@ -7,7 +7,7 @@
     </nav-bar>
 
     <!-- 使用 视图滚动插件封装的组件 ，让这一部分内容能够滚动 的 更利索 -->
-    <scroll class="content" ref="scroll" :probe-type="3" @scroll='contentScroll' >
+    <scroll class="content" ref="scroll" :probe-type="3" @scroll='contentScroll' :pull-up-load="true" @pullingUp='loadMore' >
 
       <!-- 轮播图的 组件 -->
       <home-swiper :banners="banner"></home-swiper>
@@ -106,6 +106,7 @@
         // keywords:[],
         recommend:[],
 
+        // 先设计数据结构,再发送请求
         goods:{
           'pop':{page:0 , list:[]},
           'new':{page:0 , list:[]},
@@ -130,6 +131,13 @@
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
 
+      // 监听 item 中图片的加载完成 ，
+      // this.$bus.$on('itemImageLoad', () => {
+      //   // 每一张图片加载完成， scroll 都需要 重新计算高度 , 这种方式可能会耗性能
+      //   this.$refs.scroll.refresh()
+      //   console.log('每一张图片加载完成， scroll 都需要 重新计算高度 , 这种方式可能会耗性能')
+      // })
+
     },
 
     // 计算属性
@@ -146,7 +154,7 @@
         * 事件监听相关的方法
       */
 
-     // 监听 页面点击事件，判断获取goods中的哪个数据
+      // 监听 页面点击事件，判断获取goods中的哪个数据
       tabClick(index){
         switch(index){
           case 0:
@@ -161,14 +169,22 @@
         }
       },
 
+      // 点击返回顶部
       backClick(){
         // console.log(1);
         this.$refs.scroll.scrollTo(0,0,500)
       },
-
+      // 监听滚动的位置,点击返回顶部 模块的显示和隐藏
       contentScroll(position){
         // console.log(position,-position.y);
         this.isShowBackTop = (-position.y) > 1000
+      },
+      // 上拉加载 更多
+      loadMore(){
+        console.log('上拉加载 更多');
+        this.getHomeGoods(this.currentType)
+        // 获取完数据之后 scroll 需要 重新计算高度
+        this.$refs.scroll.refresh()
       },
 
 
@@ -191,16 +207,22 @@
       // 请求商品数据
       getHomeGoods(type){
         const page = this.goods[type].page + 1
+
         getHomeGoods(type,page).then(res => {
           // console.log(res);
           // console.log(res.data.list);
           this.goods[type].list.push(...res.data.list)   // 使用 ... 这种语法的意思是 ：把数据解构，然后一个一个的添加到数组中
           this.goods[type].page += 1
-        })
+
+          // 上拉加载完毕后需要执行 finishPullUp() 方法
+          this.$refs.scroll.finishPullUp();
+
+        });
       }
 
     }
   }
+
 </script>
 
 <style scoped>

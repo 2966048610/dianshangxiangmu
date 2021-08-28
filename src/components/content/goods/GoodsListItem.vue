@@ -1,6 +1,8 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img" >
+    <!-- @load 当图像加载完成后执行 -->
+    <img :src="goodsItem.show.img" @load="imageLoad" >
+
     <div class="goods-info">
       <p> {{goodsItem.title}} </p>
       <span class="price"> {{goodsItem.price}} </span>
@@ -17,6 +19,11 @@
         default(){
           return {}
         }
+      }
+    },
+    methods:{
+      imageLoad() {
+        this.$bus.$emit('itemImageLoad')  // 传值
       }
     }
   }
