@@ -24,10 +24,12 @@
     data() {
       return {
         scroll: null,
-		pullUpLoad:{
-			type:Boolean, // 布尔类型
-			default:false
-		}
+
+        pullUpLoad:{
+          type:Boolean, // 布尔类型
+          default:false
+        },
+
       }
     },
     mounted() {
@@ -42,16 +44,21 @@
       // console.log(this.$refs.wrapper);
 
       // 监听滚动的位置
-      this.scroll.on('scroll',(position) => {
-        // console.log(position);
-        this.$emit('scroll',position)
-      })
+      if(this.probeType === 2 || this.probeType === 3) {
+        this.scroll.on('scroll',(position) => {
+          // console.log(position);
+          this.$emit('scroll',position)
+        })
+      }
+
 
       // 监听 上拉 事件
-      this.scroll.on('pullingUp', () => {
-        console.log('上拉*****************');
-        this.$emit('pullingUp')
-      })
+      if(this.pullUpLoad) {
+        this.scroll.on('pullingUp', () => {
+          console.log('监听 scroll 滚动到底部');
+          this.$emit('pullingUp')
+        })
+      }
 
 
 
@@ -59,16 +66,26 @@
     },
 
     methods:{
+      // 获取当前 在 页面上的 位置 ， 这里用在了点击返回顶部 这个功能
       scrollTo(x,y,time=300) {
-        this.scroll.scrollTo(x,y,time)
+        // 逻辑判断 && ，严谨写法 ，this.scroll 有值 才执行下一步
+        this.scroll && this.scroll.scrollTo(x,y,time)
       },
 
+      // 上拉加载更多  的 继续调用
       finishPullUp() {
-        this.scroll.finishPullUp()
+        this.scroll && this.scroll.finishPullUp()
       },
 
+      // 重新计算页面高度
       refresh() {
-        this.scroll.refresh()
+        this.scroll && this.scroll.refresh()
+        console.log('执行 refresh() 函数');
+      },
+
+      // 记录页面的位置，用于 页面重新进入时 回到 上次离开时的位置
+      getScrollY() {
+        return this.scroll ? this.scroll.y : 0
       }
 
     }

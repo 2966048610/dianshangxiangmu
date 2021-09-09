@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick" >
     <!-- @load 当图像加载完成后执行 -->
     <img :src="goodsItem.show.img" @load="imageLoad" >
 
@@ -23,7 +23,14 @@
     },
     methods:{
       imageLoad() {
-        this.$bus.$emit('itemImageLoad')  // 传值
+        this.$bus.$emit('itemImageLoad')  // 给首页home传值，用事件总线的方式
+      },
+
+      // 点击进入详情页
+      itemClick(){
+        console.log('进入详情页');
+        // 进入到详情页需要传参数
+        this.$router.push('/detail/' + this.goodsItem.iid)
       }
     }
   }

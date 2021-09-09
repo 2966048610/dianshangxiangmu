@@ -31,12 +31,14 @@
       SwiperItem
     },
     methods: {
+      // 监听图片加载完成
       imageLoad() {
+        // 判断 this.isLoad 不等于 true 时执行 ,
         if (!this.isLoad) {
-          this.$emit('swiperImageLoad')
-          this.isLoad = true
+          this.$emit('swiperImageLoad');   // 给父组件传值
+          this.isLoad = true  ;   // 把 this.isLoad 的值改为 true ，让这个传值只执行一次
         }
-      }
+      },
     }
   }
 </script>

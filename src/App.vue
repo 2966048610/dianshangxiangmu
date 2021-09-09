@@ -2,7 +2,11 @@
   <div id="app">
     <!-- 底部导航栏 组件 -->
     <main-tab-bar></main-tab-bar>
-    <router-view></router-view>
+
+    <keep-alive exclude="Detail" >
+      <router-view></router-view>
+    </keep-alive>
+
 
   </div>
 </template>

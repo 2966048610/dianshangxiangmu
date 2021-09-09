@@ -74,7 +74,8 @@
 	}
 </script>
 
-<style>
+<!-- scoped 规定样式作用域 ， 只对本页面起效果 -->
+<style scoped>
   .wrapper{
     width: 100%;
     height: 150px;

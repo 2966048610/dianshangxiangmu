@@ -32,10 +32,10 @@
     text-align: center;
     box-shadow: 0 1px 1px rgba(100,100,100,.1);
     
-    position: fixed;
+    /* position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 100; */
   }
   .left , .right{
     width: 60px;

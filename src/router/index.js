@@ -7,6 +7,7 @@ const Home = () => import('views/home/Home')
 const Cart = () => import('views/cart/Cart')
 const Category = () => import('views/category/Category')
 const Profile = () => import('views/profile/Profile')
+const Detail = () => import('views/detail/Detail')
 
 
 
@@ -35,10 +36,16 @@ export default new Router({
       path:'/profile',
       component:Profile
     },
+    
+    // 进入详情页需要传参数，用动态路由的方式
+    {
+      path:'/detail/:id',
+      component:Detail
+    },
   ],
 
   mode:'history',
-  
+
 })
 
 
