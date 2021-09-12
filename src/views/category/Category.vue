@@ -4,7 +4,7 @@
     <div class="wrapper">
 
       <ul class="center">
-        <li v-for="item in aa">{{item}}</li>
+        <li v-for="(item,index) in aa" :key="index">{{item}}</li>
 
       </ul>
 
