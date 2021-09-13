@@ -4,7 +4,11 @@
     <div class="wrapper">
 
       <ul class="center">
+<<<<<<< HEAD
         <li v-for="item in aa">{{item}}</li>
+=======
+        <li v-for="(item,index) in aa" :key="index">{{item}}</li>
+>>>>>>> b2352060bdadfc7acff8728a806a309819f67e1a
 
       </ul>
 

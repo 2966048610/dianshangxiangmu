@@ -1,10 +1,27 @@
 <template>
-  <div id="">
+
+  <div id="detail">
     <!-- 详情页{{iid}} -->
-    <detail-nav-bar></detail-nav-bar>
+    <detail-nav-bar class="detail-nav"></detail-nav-bar>
 
-    <detail-swiper :top-images='topImages'></detail-swiper>
+    <scroll class="content" ref='scroll'>
 
+      <!-- 获取顶部的图片轮播数据 -->
+      <detail-swiper :top-images='topImages'></detail-swiper>
+      
+      <!-- 接收商品详情的数据 -->
+      <detail-base-info :goods='goods'></detail-base-info>
+
+      <!-- 店铺详情 -->
+      <detail-shop-info :shop='shop'></detail-shop-info>
+
+      <!-- 商品的详情数据 -->
+      <detail-goods-info :detail-info='detailInfo' @imageLoad='imageLoad' ></detail-goods-info>
+      
+      <!-- 参数 -->
+      <detail-param-info :param-info='paramInfo'></detail-param-info>
+
+    </scroll>
 
 
   </div>
@@ -12,17 +29,34 @@
 
 <script>
 
-  import {getDetail, Goods} from 'network/datail'
+
+  import {getDetail, Goods , Shop , GoodsParam} from 'network/datail'
+
+  import Scroll from 'components/common/scroll/Scroll'
 
   import DetailNavBar from './childComps/DetailNavBar'
   import DetailSwiper from './childComps/DetailSwiper'
+  import DetailBaseInfo from './childComps/DetailBaseInfo'
+  import DetailShopInfo from './childComps/DetailShopInfo'
+  import DetailGoodsInfo from './childComps/DetailGoodsInfo'
+  import DetailParamInfo from './childComps/DetailParamInfo'
+
 
 export default {
   name:'Detail',
 
   components: {
+
+
+    Scroll,
+
     DetailNavBar,
     DetailSwiper,
+    DetailBaseInfo,
+    DetailShopInfo,
+    DetailGoodsInfo,
+    DetailParamInfo,
+
   },
 
 
@@ -35,7 +69,16 @@ export default {
       topImages:[],
 
       // 接收商品详情的数据
-      goods:null,
+      goods:{},
+
+      // 店铺详情
+      shop:{},
+
+      // 商品的详情数据
+      detailInfo:{},
+
+      // 参数 的信息
+      paramInfo:{},
 
 
     }
@@ -70,10 +113,21 @@ export default {
         // new 一个对象Goods,传入三个参数，传入对应的参数
         this.goods = new Goods(data.itemInfo,data.columns,data.shopInfo.services)
 
-        console.log(this.goods);
+        // 把店铺详情的数据传入 Shop对象
+        this.shop = new Shop(data.shopInfo)
+
+        // 保存商品的详情数据
+        this.detailInfo = data.detailInfo
+
+        this.paramInfo = new GoodsParam(data.itemParams.info,data.itemParams.rule)
+
 
 
       })
+    },
+
+    imageLoad(){
+      this.$refs.scroll.refresh()
     }
 
 
@@ -93,6 +147,27 @@ export default {
 
 </script>
 
-<style>
+
+<style scoped>
+
+#detail{
+  position: relative;
+  z-index: 101;
+  background-color: #ffffff;
+  height: 100vh;
+}
+
+.detail-nav{
+  position: relative;
+  z-index: 101;
+  background-color: #ffffff;
+
+}
+
+.content{
+  height: calc(100% - 44px);
+}
+
+
 
 </style>

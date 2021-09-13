@@ -22,7 +22,34 @@ export class Goods {
       this.columns = columns
       this.services = services
       this.realPrice = itemInfo.lowNowPrice
-      
+
   }
 }
+
+
+// 对 店铺详情 的数据进行封装
+export class Shop {
+  constructor(shopInfo) {
+    this.logo = shopInfo.shopLogo;
+    this.name = shopInfo.name;
+    this.fans = shopInfo.cFans;
+    this.sells = shopInfo.cSells;
+    this.score = shopInfo.score;
+    this.goodsCount = shopInfo.cGoods
+  }
+}
+
+// 对参数 数据的 封装
+export class GoodsParam {
+  constructor(info,rule) {
+      // 注：images 可能没有值（某些商品有值，某些没有值）
+      this.image = info.images ? info.image[0] : ';';
+      this.infos = info.set;
+      this.sizes = rule.tables;
+  }
+}
+
+
+
+
 

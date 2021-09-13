@@ -80,7 +80,7 @@
       // 重新计算页面高度
       refresh() {
         this.scroll && this.scroll.refresh()
-        console.log('执行 refresh() 函数');
+        console.log('执行 refresh() 函数；重新计算页面高度');
       },
 
       // 记录页面的位置，用于 页面重新进入时 回到 上次离开时的位置

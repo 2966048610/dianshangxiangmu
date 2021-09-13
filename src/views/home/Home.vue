@@ -235,7 +235,7 @@
         // 获取 tabcontrol 中的 offsetTop
         // 所有的组件都有一个属性 $el :用于获取组件中的元素
         this.tabOffsetTop = this.$refs.tabControl1.$el.offsetTop
-        console.log(this.tabOffsetTop);
+        // console.log(this.tabOffsetTop);
       },
 
 
@@ -281,12 +281,12 @@
     activated() {
       console.log('调用activated，进入页面时执行');
 
+      // 进入页面时刷新scroll ; 在这里先刷新 ，之后再回到上次离开的位置
+      this.$refs.scroll.refresh()
       // 进入页面时回到上次离开时的位置
       this.$refs.scroll.scrollTo(0,this.saveY,0);
-      // 进入页面时刷新scroll
-      this.$refs.scroll.refresh()
-      console.log(this.$refs.scroll.refresh());
-      console.log(this.saveY);
+
+      // console.log(this.saveY);
     },
     // 离开页面时执行deactivated
     deactivated() {
@@ -295,7 +295,7 @@
       // 离开页面时记录位置
       // this.saveY = this.$refs.scroll.scroll.y
       this.saveY = this.$refs.scroll.getScrollY()
-      console.log(this.saveY);
+      // console.log(this.saveY);
 
     }
 

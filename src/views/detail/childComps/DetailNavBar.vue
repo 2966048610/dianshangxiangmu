@@ -45,12 +45,14 @@
       titleClick(index){
         this.currentIndex = index
       },
-      
+
       backClick() {
+        // 这里两种方式都可以回退到上一个页面
         this.$router.back()
+        // this.$router.go(-1)
       }
-      
-      
+
+
     }
 
 
