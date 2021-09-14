@@ -135,6 +135,8 @@
 
         // 记录页面离开和进入的位置
         saveY:0,
+        
+        // itemImgListener:null,
 
       }
 
@@ -296,6 +298,9 @@
       // this.saveY = this.$refs.scroll.scroll.y
       this.saveY = this.$refs.scroll.getScrollY()
       // console.log(this.saveY);
+      
+      // 取消全局时间的监听
+      // this.$bus.$off('itemImageLoad',这里需要传入参数)  // 不传参数则会把所有事件都停掉
 
     }
 
@@ -343,6 +348,7 @@ ul{
 
 .tabControlClass{
   position: relative;
+  top: -1px;
   z-index: 10;
 }
 

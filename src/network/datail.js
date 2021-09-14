@@ -1,5 +1,6 @@
 import {request} from 'network/request';
 
+// 详情数据
 export function getDetail(iid){
   return request({
     url:'/detail',
@@ -8,6 +9,14 @@ export function getDetail(iid){
     }
   })
 }
+
+// 推荐 数据
+export function getRecommend() {
+  return request({
+    url:'/recommend'
+  })
+}
+
 
 
 // 创建一个类 ，用来接收 服务器传回来的数据，对数据进行封装
@@ -43,13 +52,8 @@ export class Shop {
 export class GoodsParam {
   constructor(info,rule) {
       // 注：images 可能没有值（某些商品有值，某些没有值）
-      this.image = info.images ? info.image[0] : ';';
+      this.image = info.images ? info.images[0] : '';
       this.infos = info.set;
       this.sizes = rule.tables;
   }
 }
-
-
-
-
-

@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick" >
     <!-- @load 当图像加载完成后执行 -->
-    <img :src="goodsItem.show.img" @load="imageLoad" >
+    <img :src="showImage" @load="imageLoad" >
 
     <div class="goods-info">
       <p> {{goodsItem.title}} </p>
@@ -21,16 +21,34 @@
         }
       }
     },
+
+    // 计算属性
+    computed: {
+      showImage() {
+        return this.goodsItem.image || this.goodsItem.show.img
+      }
+    },
+
+
     methods:{
       imageLoad() {
-        this.$bus.$emit('itemImageLoad')  // 给首页home传值，用事件总线的方式
+
+          // this.$bus.$emit('itemImageLoad')  // 给首页home传值，用事件总线的方式
+
+        // 判断路由是否 跳往首页 ,跳往首页才执行
+        if(this.$route.path.indexOf('/home')) {
+          this.$bus.$emit('itemImageLoad')  // 给首页home传值，用事件总线的方式
+        }
+
       },
 
       // 点击进入详情页
       itemClick(){
         console.log('进入详情页');
         // 进入到详情页需要传参数
+        // const id = this.goodsItem.iid || this.goodsItem.item_id
         this.$router.push('/detail/' + this.goodsItem.iid)
+        // console.log(id);
       }
     }
   }
