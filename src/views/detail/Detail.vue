@@ -1,6 +1,12 @@
 <template>
 
   <div id="detail">
+
+    <ul>
+      <li v-for="item in $store.state.cartList">{{item}}</li>
+    </ul>
+
+
     <!-- 详情页{{iid}} -->
     <detail-nav-bar class="detail-nav" ref='nav' @titleClick='titleClick'></detail-nav-bar>
 
@@ -30,7 +36,11 @@
     </scroll>
 
     <!-- 底部 -->
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addToCart='addToCart'></detail-bottom-bar>
+
+    <!-- 点击 返回 顶部 组件 -->
+    <!-- 组件添加 原生事件时，需要添加修饰符 .native -->
+    <back-top @click.native='backClick' v-show="isShowBackTop" ></back-top>
 
 
   </div>
@@ -53,6 +63,7 @@
   import DetailParamInfo from './childComps/DetailParamInfo'
   import DetailCommentInfo from './childComps/DetailCommentInfo'
   import DetailBottomBar from './childComps/DetailBottomBar'
+  import BackTop from 'components/content/backTop/BackTop'
 
 
 export default {
@@ -72,6 +83,7 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     DetailBottomBar,
+    BackTop
 
   },
 
@@ -106,6 +118,9 @@ export default {
       themeTopYs:[],
       getThemeTopY:null,  // 对计算高度的赋值 进行防抖
       currentIndex:0,
+
+      // 返回顶部
+      isShowBackTop:false ,
 
 
 
@@ -243,6 +258,40 @@ export default {
           this.$refs.nav.currentIndex = this.currentIndex
         }
       }
+
+
+
+      // 监听滚动的位置,点击返回顶部 模块的显示和隐藏
+      // console.log(position,-position.y);
+      this.isShowBackTop = (-position.y) > 1000
+
+
+    },
+
+
+    // 点击返回顶部
+    backClick(){
+      // console.log(1);
+      this.$refs.scroll.scrollTo(0,0,500)
+    },
+
+
+    // 点击加入购物车
+    addToCart() {
+      // 获取购物车需要展示的信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.realPrice;
+      product.iid = this.iid;
+      console.log(product);
+
+      // 2、将商品添加到购物车里
+      // this.$store.cartList.push(product)  // 这个方法也可以添加，但尽量不要使用这种方法
+      // this.$store.commit('addCart',product) // 可以用这种方式添加
+      this.$store.dispatch('addCart',product)
+
 
 
     }

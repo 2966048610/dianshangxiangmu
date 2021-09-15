@@ -135,7 +135,7 @@
 
         // 记录页面离开和进入的位置
         saveY:0,
-        
+
         // itemImgListener:null,
 
       }
@@ -230,7 +230,8 @@
         console.log('上拉加载 更多');
         this.getHomeGoods(this.currentType)
         // 获取完数据之后 scroll 需要 重新计算高度
-        // this.$refs.scroll.refresh()
+        this.$refs.scroll.refresh()
+        
       },
       // 监听图片加载完成时执行 ，计算 tabcontrol 中的 offsetTop 的高度 ，完成 tabcontrol 组件的吸顶效果
       swiperImageLoad() {
@@ -298,7 +299,7 @@
       // this.saveY = this.$refs.scroll.scroll.y
       this.saveY = this.$refs.scroll.getScrollY()
       // console.log(this.saveY);
-      
+
       // 取消全局时间的监听
       // this.$bus.$off('itemImageLoad',这里需要传入参数)  // 不传参数则会把所有事件都停掉
 
