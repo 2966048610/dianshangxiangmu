@@ -71,6 +71,12 @@
       })
 
 
+    },
+    destroyed() {
+
+    },
+    deactivated() {
+      console.log(this.scroll);
     }
 	}
 </script>

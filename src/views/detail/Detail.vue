@@ -2,11 +2,6 @@
 
   <div id="detail">
 
-    <ul>
-      <li v-for="item in $store.state.cartList">{{item}}</li>
-    </ul>
-
-
     <!-- 详情页{{iid}} -->
     <detail-nav-bar class="detail-nav" ref='nav' @titleClick='titleClick'></detail-nav-bar>
 
@@ -64,6 +59,9 @@
   import DetailCommentInfo from './childComps/DetailCommentInfo'
   import DetailBottomBar from './childComps/DetailBottomBar'
   import BackTop from 'components/content/backTop/BackTop'
+
+  // 引入 mapActions ，在 methods 中 使用 ，可以把 vuex 里的函数 映射到 methods 方法中
+  import {mapActions} from 'vuex'
 
 
 export default {
@@ -164,6 +162,9 @@ export default {
   },
 
   methods:{
+
+    // 需要映射的 方法 ，vuex 的使用
+    ...mapActions(['addCart']),
 
     getDetail(){
       // 根据iid请求详情数据
@@ -285,12 +286,21 @@ export default {
       product.desc = this.goods.desc;
       product.price = this.goods.realPrice;
       product.iid = this.iid;
-      console.log(product);
+      // console.log(product);
 
       // 2、将商品添加到购物车里
       // this.$store.cartList.push(product)  // 这个方法也可以添加，但尽量不要使用这种方法
       // this.$store.commit('addCart',product) // 可以用这种方式添加
-      this.$store.dispatch('addCart',product)
+      this.$store.dispatch('addCart',product).then(res => {
+        // 监听 添加到购物车成功 后 的 回调
+        console.log(res);
+        // $toast.toast 已经以 插件的方式 封装完成 ,在页面中可以直接调用
+        this.$toast.toast(res)
+      })
+      // 这里 也可以 使用 vuex 来把 addCart 映射 过来 ,直接 调用
+      // this.addCart(product).then(res => {
+      //   console.log(res);
+      // })
 
 
 

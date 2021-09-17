@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import mutations from './mutations'
 import actions from './actions'
+import getters from './getters'
 
 // 1、安装 Vuex 插件
 Vue.use(Vuex);
@@ -61,8 +62,8 @@ const store = new Vuex.Store({
 
   // 第二种做法：修改了哪里可以实时监测
   mutations,
-  actions
-
+  actions,
+  getters
 
 });
 

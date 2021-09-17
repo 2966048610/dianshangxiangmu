@@ -13,6 +13,7 @@ export default {
     payload.count ++
   },
   [ADD_TO_CART](state, payload) {  // 实现 添加 新的商品
+    payload.checked = true    // 添加一个属性，用来记录商品有没有被选中
     state.cartList.push(payload)
   }
 

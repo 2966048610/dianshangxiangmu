@@ -1,7 +1,8 @@
 <template>
   <div class="goods-item" @click="itemClick" >
     <!-- @load 当图像加载完成后执行 -->
-    <img :src="showImage" @load="imageLoad" >
+    <!-- 使用了图片懒加载后 ，需要添加 一个 key -->
+    <img v-lazy="showImage" :key='showImage' @load="imageLoad" >
 
     <div class="goods-info">
       <p> {{goodsItem.title}} </p>
