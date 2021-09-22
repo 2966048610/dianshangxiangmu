@@ -33,13 +33,15 @@
       }
     },
     mounted() {
-
+      // 默认情况下 BScroll 是不可以实时的监听滚动位置
+      // probe :侦测  ； 0 和 1 都是不侦测实时的位置  ； 2：在手指滚动的过程中侦测，手指离开后的惯性滚动过程不侦测 ； 3：只要是滚动，都侦测
+      
       // 创建 BScroll 对象
       this.scroll = new BScroll(this.$refs.wrapper,{
-        click:true,
+        click:true,   // 允许点击
         probeType: this.probeType , // 根据 使用者 输入的 值 来决定 是否 监听 ，怎么样的 监听 ，值：0,1,2,3
         observeDOM:true , // 实时监听 DOM
-        pullUpLoad:this.pullUpLoad
+        pullUpLoad:this.pullUpLoad   // 上拉加载
       })
       // console.log(this.$refs.wrapper);
 

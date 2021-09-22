@@ -26,7 +26,7 @@
     // 计算属性
     computed: {
       showImage() {
-        return this.goodsItem.image || this.goodsItem.show.img
+        return this.goodsItem.img || this.goodsItem.image || this.goodsItem.show.img
       }
     },
 
@@ -37,8 +37,10 @@
           // this.$bus.$emit('itemImageLoad')  // 给首页home传值，用事件总线的方式
 
         // 判断路由是否 跳往首页 ,跳往首页才执行
-        if(this.$route.path.indexOf('/home')) {
-          this.$bus.$emit('itemImageLoad')  // 给首页home传值，用事件总线的方式
+        if(this.$route.path.indexOf('/home') !== -1) {
+          this.$bus.$emit('homeitemImageLoad')  // 给首页 home 传值，用事件总线的方式
+        }else if(this.$route.path.indexOf('/category') !== -1) { // 判断路由是否 跳往分类 ,跳往分类才执行
+          this.$bus.$emit('categoryItemImageLoad')  // 给分类 category 传值，用事件总线的方式
         }
 
       },

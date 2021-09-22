@@ -79,8 +79,9 @@
         }
       },
 
+      // 去计算
       calcClick(){
-        if(!this.isSelectAll) {
+        if(!this.checkLength) {
           // $toast.toast 已经以 插件的方式 封装完成 ,在页面中可以直接调用
           this.$toast.toast('请选择购买的商品')
         }

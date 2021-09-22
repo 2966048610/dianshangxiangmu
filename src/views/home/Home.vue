@@ -167,7 +167,7 @@
       // 把 this.$refs.scroll.refresh() 作为参数 传入 防抖函数 debounce() ,并赋值给 refresh 变量
       let refresh = debounce(this.$refs.scroll.refresh,50)
       // 监听 item 中图片的加载完成 ，
-      this.$bus.$on('itemImageLoad', () => {
+      this.$bus.$on('homeitemImageLoad', () => {
         // 每一张图片加载完成， scroll 都需要 重新计算高度 , 这种方式可能会耗性能
         // this.$refs.scroll.refresh()
         refresh()
