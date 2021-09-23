@@ -231,7 +231,7 @@
         this.getHomeGoods(this.currentType)
         // 获取完数据之后 scroll 需要 重新计算高度
         this.$refs.scroll.refresh()
-        
+
       },
       // 监听图片加载完成时执行 ，计算 tabcontrol 中的 offsetTop 的高度 ，完成 tabcontrol 组件的吸顶效果
       swiperImageLoad() {
@@ -239,6 +239,10 @@
         // 所有的组件都有一个属性 $el :用于获取组件中的元素
         this.tabOffsetTop = this.$refs.tabControl1.$el.offsetTop
         // console.log(this.tabOffsetTop);
+
+        // 轮播图的图片每一张加载完成， scroll 都需要 重新计算高度 , 这种方式可能会耗性能
+        this.$refs.scroll.refresh()
+
       },
 
 

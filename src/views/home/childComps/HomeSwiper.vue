@@ -34,10 +34,14 @@
       // 监听图片加载完成
       imageLoad() {
         // 判断 this.isLoad 不等于 true 时执行 ,
-        if (!this.isLoad) {
-          this.$emit('swiperImageLoad');   // 给父组件传值
-          this.isLoad = true  ;   // 把 this.isLoad 的值改为 true ，让这个传值只执行一次
-        }
+        // if (!this.isLoad) {
+        //   this.$emit('swiperImageLoad');   // 给父组件传值
+        //   this.isLoad = true  ;   // 把 this.isLoad 的值改为 true ，让这个传值只执行一次
+        // }
+        
+        // 每张图片更新都需要给父组件传值
+        this.$emit('swiperImageLoad');   // 给父组件传值
+
       },
     }
   }
